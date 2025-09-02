@@ -1,0 +1,47 @@
+# --- Python artifacts ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+build/
+dist/
+
+# --- Environments ---
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# --- Logs & runtime data (keep placeholders) ---
+logs/*
+!logs/.gitkeep
+data/*
+!data/.gitkeep
+
+# --- Generated documents (outputs & samples) ---
+*.docx
+*.pdf
+
+# --- Tools, coverage, caches ---
+*.log
+*.pid
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Editors/OS junk ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --- Local scripts/exports you mentioned ---
+code_reader_*.ps1
+full_folder_and_file_and_code_data.md
+
+# --- Node (harmless if unused, useful if added later) ---
+node_modules/
