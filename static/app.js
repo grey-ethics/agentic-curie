@@ -40,12 +40,12 @@ function appendToolTrace(toolCalls) {
     if (tc.type === "call") {
       const row = document.createElement("div");
       row.className = "trace-row";
-      row.textContent = `→ ${tc.tool}(${tc.arguments})`;
+      row.textContent = `-> ${tc.tool}(${tc.arguments})`;
       div.appendChild(row);
     } else if (tc.type === "output") {
       const row = document.createElement("div");
       row.className = "trace-row out";
-      row.innerHTML = linkify(`← ${tc.output}`);
+      row.innerHTML = linkify(`<- ${tc.output}`);
       div.appendChild(row);
     }
   });
