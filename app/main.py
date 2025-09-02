@@ -16,7 +16,7 @@ from app.api.routes.files import router as files_router
 from app.api.routes.summarize import router as summarize_router  # optional: keep for testing
 from app.core.logging import configure_logging
 
-app = FastAPI(title="Agentic Curie", version="0.2.0")
+app = FastAPI(title="Agentic Curie", version="0.1.1")
 
 app.add_middleware(
     CORSMiddleware,
