@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from agents import Agent, Runner
 from agents.items import ToolCallItem, ToolCallOutputItem
 
-from app.tools import merge_documents
+from app.tools import merge_documents, resume_match
 from app.services.filestore import get_meta
 
 router = APIRouter()
@@ -13,14 +13,14 @@ router = APIRouter()
 AGENT = Agent(
     name="Agentic Curie",
     instructions=(
-        "You are a helpful chat assistant. "
-        "If the user asks to merge/summarize/combine multiple uploaded documents into one, "
-        "use the merge_documents tool. "
-        "The user may upload files in the same turn; the backend provides a system note "
-        "listing uploaded file IDs and names. Only call merge_documents if you have at least two file IDs. "
-        "If none or only one file is available, ask the user to upload more."
+        "You are a helpful chat assistant.\n"
+        "- For requests to merge/combine/summarize multiple uploaded documents into one, call merge_documents(file_ids, template_id?).\n"
+        "- For requests to compare resumes to a job description (JD), call resume_match(resume_file_ids, jd_file_id?, jd_text?).\n"
+        "- If you have fewer than the required files (e.g., <2 for merging, or 0 resumes for matching), ask the user to upload them.\n"
+        "- If the user provides a JD inline as text, pass it via jd_text; if they uploaded a JD file, pass its ID via jd_file_id.\n"
+        "Keep responses concise and confirm what you'll do before running heavy operations."
     ),
-    tools=[merge_documents],
+    tools=[merge_documents, resume_match],
 )
 
 # In-memory conversation store (session_id -> input list)
@@ -40,7 +40,7 @@ async def chat(body: ChatRequest):
     session_id = body.session_id or "default"
     prior = SESSION_STORE.get(session_id)
 
-    # Build a small system message that enumerates uploaded files (if any)
+    # Build a small system message enumerating uploaded files (if any)
     sys_note = ""
     if body.attachment_ids:
         lines = []
