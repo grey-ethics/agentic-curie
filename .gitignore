@@ -45,3 +45,9 @@ full_folder_and_file_and_code_data.md
 
 # --- Node (harmless if unused, useful if added later) ---
 node_modules/
+
+# runtime
+data/
+logs/
+.env
+
